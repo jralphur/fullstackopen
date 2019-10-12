@@ -31,18 +31,15 @@ const Header = (head) => (
 )
 
 const Content = (content) => (
-    <>
-        <p>
-            {content.part1} {content.exercises1}
-        </p>
-        <p>
-            {content.part2} {content.exercises2}
-        </p>
-        <p>
-            {content.part3} {content.exercises3}
-        </p>
-    </>
+    <div>
+        <Part part={content.part1} exercise={content.exercise1} />
+        <Part part={content.part2} exercise={content.exercise2} />
+        <Part part={content.part3} exercise={content.exercise3} />
+    </div>
+)
 
+const Part = (part) => (
+    <p>{part.part} {part.exercise}</p>
 )
 
 const Total = (num) => (
