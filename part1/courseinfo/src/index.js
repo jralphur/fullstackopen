@@ -5,31 +5,29 @@ import ReactDOM from 'react-dom';
 
 const App = () => {
     const course = 'Half Stack application development'
-    const part1 = {
-        name: "Fundamentals of React",
-        exercises: 10
-    }
-
-    const part2 = {
-        name: "Using props to pass data",
-        exercises: 7
-    }
-
-    const part3 = {
-        name: "State of a component",
-        exercises: 14
-    }
+    const parts = [
+        {
+            name: "Fundamentals of React",
+            exercises: 10
+        },
+        {
+            name: "Using props to pass data",
+            exercises: 7
+        },
+        {
+            name: "State of a component",
+            exercises: 14
+        }
+    ]
   
     return (
         <div>
             {/* header */}
             <Header text={course}/>
             {/* content */}
-            <Content part1={part1}
-                     part2={part2}
-                     part3={part3} />
+            <Content parts={parts}/>
             { /* total */ }
-            <Total value={part1.exercises + part2.exercises + part3.exercises} />
+            <Total value={parts} />
         </div>
     )
 }
@@ -38,11 +36,11 @@ const Header = (head) => {
     return (<h1> {head.text} </h1>)
 }
 
-const Content = (content) => (
+const Content = (props) => (
     <div>
-        <Part part={content.part1}/>
-        <Part part={content.part2}/>
-        <Part part={content.part3}/>
+        <Part part={props.parts[0]}/>
+        <Part part={props.parts[1]}/>
+        <Part part={props.parts[2]}/>
     </div>
 )
 
@@ -50,9 +48,12 @@ const Part = (prop) => (
     <p>{prop.part.name} {prop.part.exercises}</p>
 )
 
-const Total = (num) => (
-    <p>Number of exercises {num.value} </p>
-)
+const Total = (props) => {
+    let total = props.value[0].exercises +
+                props.value[1].exercises +
+                props.value[2].exercises
+    return (<p>Number of exercises {total} </p>)
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
