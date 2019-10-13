@@ -11,7 +11,7 @@ const App = () => {
     const exercises2 = 7
     const part3 = 'State of a component'
     const exercises3 = 14
-
+  
     return (
         <div>
             {/* header */}
@@ -32,9 +32,9 @@ const Header = (head) => (
 
 const Content = (content) => (
     <div>
-        <Part part={content.part1} exercise={content.exercise1} />
-        <Part part={content.part2} exercise={content.exercise2} />
-        <Part part={content.part3} exercise={content.exercise3} />
+        <Part part={content.part1} exercise={content.exercises1}/>
+        <Part part={content.part2} exercise={content.exercises2} />
+        <Part part={content.part3} exercise={content.exercises3} />
     </div>
 )
 
