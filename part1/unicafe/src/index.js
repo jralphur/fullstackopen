@@ -28,7 +28,7 @@ const Statistics = ({good, neutral, bad}) => {
     const all = (good + neutral + bad)
     const average = all === 0 ? 0 : (good - bad) / all
     const positive = all === 0 ? 0 : (good / all) * 100
-    return (
+    return all !== 0 ? (
         <>
          <h1>statistics</h1>
             <table>
@@ -40,7 +40,10 @@ const Statistics = ({good, neutral, bad}) => {
                <TableRow value={positive} text="positive" symbol='%' />
             </table>
         </>
-    )
+    ) :
+    (<h1> 
+        No feedback given
+    </h1>)
 }
 
 const Button = ({setter, text}) => {
