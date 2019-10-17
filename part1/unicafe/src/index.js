@@ -16,11 +16,11 @@ const App = () => {
     )
 }
 
-const TableRow = ({value, text, symbol}) => {
+const Statistic = ({value, text}) => {
     return (
         <tr>
             <th scope="row">{text}</th>
-            <td>{value}{symbol}</td>
+            <td>{value}</td>
         </tr>
     )
 }
@@ -32,12 +32,12 @@ const Statistics = ({good, neutral, bad}) => {
         <>
          <h1>statistics</h1>
             <table>
-               <TableRow value={good} text="good" />
-               <TableRow value={neutral} text="neutral" />
-               <TableRow value={bad} text="bad" />
-               <TableRow value={all} text="all" />
-               <TableRow value={average} text="average" />
-               <TableRow value={positive} text="positive" symbol='%' />
+               <Statistic value={good} text="good" />
+               <Statistic value={neutral} text="neutral" />
+               <Statistic value={bad} text="bad" />
+               <Statistic value={all} text="all" />
+               <Statistic value={average} text="average" />
+               <Statistic value={positive.toString() + '%'} text="positive" />
             </table>
         </>
     ) :
