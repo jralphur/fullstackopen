@@ -5,49 +5,45 @@ const App = () => {
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
     const [bad, setBad] = useState(0)
-
-    const all = (good + neutral + bad)
-    const average = all === 0 ? 0 : (good - bad) / all
-    const positive = all === 0 ? 0 : (good / all) * 100
     return (
         <div>
             <h1>give feedback</h1>
             <Button setter={() => setGood(good + 1)} text="good" />
             <Button setter={() => setNeutral(neutral + 1)} text="neutral" />
             <Button setter={() => setBad(bad + 1)} text="bad" />
-            <h1>statistics</h1>
-            <table>
-                <tr>
-                    <th scope="row">good</th>
-                    <td>{good}</td>
-                </tr>
-                <tr>
-                    <th scope="row">neutral</th>
-                    <td>{neutral}</td>
-                </tr>
-                <tr>
-                    <th scope="row">bad</th>
-                    <td>{bad}</td>
-                </tr>
-                <tr>
-                    <th scope="row">all</th>
-                    <td>{all}</td>
-                </tr>
-                <tr>
-                    <th scope="row">average</th>
-                    <td>{average}</td>
-                </tr>
-                <tr>
-                    <th scope="row">positive</th>
-                    <td>{positive}%</td>
-                </tr>
-            </table>
+            <Statistics good={good} bad={bad} neutral={neutral} />
         </div>
     )
 }
 
-const Button = ({setter, text}) => {
+const TableRow = ({value, text, symbol}) => {
+    return (
+        <tr>
+            <th scope="row">{text}</th>
+            <td>{value}{symbol}</td>
+        </tr>
+    )
+}
+const Statistics = ({good, neutral, bad}) => {
+    const all = (good + neutral + bad)
+    const average = all === 0 ? 0 : (good - bad) / all
+    const positive = all === 0 ? 0 : (good / all) * 100
+    return (
+        <>
+         <h1>statistics</h1>
+            <table>
+               <TableRow value={good} text="good" />
+               <TableRow value={neutral} text="neutral" />
+               <TableRow value={bad} text="bad" />
+               <TableRow value={all} text="all" />
+               <TableRow value={average} text="average" />
+               <TableRow value={positive} text="positive" symbol='%' />
+            </table>
+        </>
+    )
+}
 
+const Button = ({setter, text}) => {
     return (
         <>
             <button onClick={setter}>{text}</button>
