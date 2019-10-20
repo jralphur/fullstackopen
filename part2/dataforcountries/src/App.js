@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import FilterResults from './components/FilterResults'
+import CountryDetails from './components/CountryDetails'
 import axios from 'axios'
 
 const App = () => {
@@ -11,13 +11,38 @@ const App = () => {
   }
 
   const countriesAPI = "https://restcountries.eu/rest/v2/all"
-  useEffect(() => { axios.get(countriesAPI).then(response => updateResults(response.data)) }, []);
+  useEffect(() => { axios.get(countriesAPI).then(response => updateResults(response.data)) }, [])
+
+  const filter = () => {
+    if (formValue.length === 0) {
+      return (<></>)
+    }
+    const filtered = countryResults.filter(
+      country => country.name.toLowerCase().includes(formValue.toLowerCase())
+    )
+
+    if (filtered.length === 1) {
+      const {name, capital, population, languages, flag} = filtered[0];
+      return <CountryDetails name={name}
+                             capital={capital}
+                             population={population}
+                             languages={languages}
+                             flag={flag} />
+    }
+
+    if (filtered.length >= 10) {
+      return (<p>Too many results. Be a bit more strict.</p>)
+    }
+    
+    return (<>{filtered.map(country => <li key={country.name}>{country.name}</li>)}</>)
+  }
+
   return (
     <div>
       find countries
       <input onChange={handleFormChange} value={formValue}>
       </input>
-      <FilterResults countries={countryResults} filter={formValue} />
+      {filter(countryResults)}
     </div>
   )
 }
