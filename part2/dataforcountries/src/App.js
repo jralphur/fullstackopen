@@ -5,6 +5,7 @@ import axios from 'axios'
 const App = () => {
   const [formValue, changeFormValue] = useState("")
   const [countryResults, updateResults] = useState([])
+  const [clicked, setClicked] = useState(false);
 
   const handleFormChange = (event) => {
     changeFormValue(event.target.value);
@@ -21,6 +22,10 @@ const App = () => {
       country => country.name.toLowerCase().includes(formValue.toLowerCase())
     )
 
+    const handleClick = () => {
+      return
+    }
+
     if (filtered.length === 1) {
       const {name, capital, population, languages, flag} = filtered[0];
       return <CountryDetails name={name}
@@ -33,8 +38,11 @@ const App = () => {
     if (filtered.length >= 10) {
       return (<p>Too many results. Be a bit more strict.</p>)
     }
-    
-    return (<>{filtered.map(country => <li key={country.name}>{country.name}</li>)}</>)
+    return (
+            <div>
+              {filtered.map(({name}) => <div key={name}>{name} <button onClick={(e) => changeFormValue(name)}>view</button></div>)}
+            </div>
+    )
   }
 
   return (
@@ -42,7 +50,7 @@ const App = () => {
       find countries
       <input onChange={handleFormChange} value={formValue}>
       </input>
-      {filter(countryResults)}
+      {filter()}
     </div>
   )
 }
