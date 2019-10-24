@@ -18,6 +18,24 @@ const App = () => {
     setNewNumber(event.target.value);
   } 
 
+  const handleNumberDelete = (id) => {
+    const person = persons.find(peeps => peeps.id === id)
+    if (person === undefined) {
+      console.log("not available locally!")
+      return;
+    }
+
+    if (window.confirm(`Are you sure you want to delete ${person.name}?`)) {
+    personService.deletePerson(id).then(after => {
+      addPersons(persons.filter(person => person.id !== id))
+      setNewName("")
+      setNewNumber("")
+    }).catch((error) => console.log(error))
+  }
+  
+}
+  
+
   const handleSubmit = (event) => {
     event.preventDefault()
     if (persons.findIndex(p => p.name.toUpperCase() === newName.toUpperCase()) === -1) {
@@ -28,7 +46,7 @@ const App = () => {
 
         personService.addPerson(nextPerson)
             .then(newPerson => {
-                addPersons(persons.concat(nextPerson));
+                addPersons(persons.concat(newPerson));
                 setNewName("");
                 setNewNumber("");
         }).catch(reason => console.log(reason))
@@ -53,7 +71,7 @@ const App = () => {
       />
       <h2>Numbers</h2>
       {/* persons */ }
-      <Persons filterResults={filterResults} persons={persons} />
+      <Persons filterResults={filterResults} persons={persons} handleNumberDelete={handleNumberDelete} />
     </div>
   )
 }

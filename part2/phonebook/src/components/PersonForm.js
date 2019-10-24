@@ -20,4 +20,5 @@ const PersonForm = ({ newName,
         </form>
     )
 }
+
 export default PersonForm;
