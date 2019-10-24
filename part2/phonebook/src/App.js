@@ -17,6 +17,31 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const local = "http://localhost:3001/persons"
 
+  const handleNameChange = (event) => {
+    setNewName(event.target.value);
+  }
+  
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
+  } 
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    if (persons.findIndex(p => p.name.toUpperCase() === newName.toUpperCase()) === -1) {
+        const nextPerson = {
+            name: newName,
+            number: newNumber
+        }
+        axios.post(local, nextPerson)
+            .then(response => {
+                addPersons(persons.concat(nextPerson));
+                setNewName("");
+                setNewNumber("");
+        }).catch(reason => console.log(reason))
+    }
+    else alert(`${newName} is already in the phonebook`)
+  }
+
   useEffect(() => { axios.get(local).then(response => addPersons(response.data)) } 
            ,[]);
   return (
@@ -25,12 +50,13 @@ const App = () => {
       { /* filter */ }
       <Filter filterResults={filterResults} setFilter={setFilter} />
       <h2>add a new</h2>
-      <PersonForm persons={persons} 
-                  addPersons={addPersons} 
-                  newName={newName}
-                  setNewName={setNewName}
+      <PersonForm newName={newName}
                   newNumber={newNumber} 
-                  setNewNumber={setNewNumber} />
+                  setNewNumber={setNewNumber}
+                  handleNameChange={handleNameChange}
+                  handleSubmit={handleSubmit}
+                  handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
       {/* persons */ }
       <Persons filterResults={filterResults} persons={persons} />

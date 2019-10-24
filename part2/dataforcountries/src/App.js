@@ -5,7 +5,6 @@ import axios from 'axios'
 const App = () => {
   const [formValue, changeFormValue] = useState("")
   const [countryResults, updateResults] = useState([])
-  const [clicked, setClicked] = useState(false);
 
   const handleFormChange = (event) => {
     changeFormValue(event.target.value);
@@ -21,10 +20,6 @@ const App = () => {
     const filtered = countryResults.filter(
       country => country.name.toLowerCase().includes(formValue.toLowerCase())
     )
-
-    const handleClick = () => {
-      return
-    }
 
     if (filtered.length === 1) {
       const {name, capital, population, languages, flag} = filtered[0];
