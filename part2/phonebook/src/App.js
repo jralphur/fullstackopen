@@ -30,29 +30,41 @@ const App = () => {
       addPersons(persons.filter(person => person.id !== id))
       setNewName("")
       setNewNumber("")
-    }).catch((error) => console.log(error))
+    }).catch((error) => {
+      alert(`${person.name} is already deleted, or doesn't exist`)
+      addPersons(persons.filter(person => person.id !== id))
+    })
   }
-  
 }
-  
-
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (persons.findIndex(p => p.name.toUpperCase() === newName.toUpperCase()) === -1) {
-        const nextPerson = {
-            name: newName,
-            number: newNumber
-        }
+    const personIndex = persons.findIndex(p => p.name.toUpperCase() === newName.toUpperCase()) 
+    const nextPerson = {
+      name: newName,
+      number: newNumber
+  }
+    if (personIndex === -1) {
+     
 
         personService.addPerson(nextPerson)
             .then(newPerson => {
                 addPersons(persons.concat(newPerson));
                 setNewName("");
                 setNewNumber("");
-        }).catch(reason => console.log(reason))
+        }).catch(reason => {
+          alert(reason)
+        })
     }
-    else alert(`${newName} is already in the phonebook`)
+    else {
+      const {name, id} = persons[personIndex];
+      if (window.confirm(`${name} is already in the phonebook, replace the old number with a new one?`)) {
+        personService.update(id, nextPerson).then(newPerson => 
+          addPersons(persons.map(person => person.id !== id ? person : newPerson))
+        )
+      }
+    }
   }
+
 
   useEffect(() => { personService.getAll().then(persons => addPersons(persons)) } 
            ,[]);
