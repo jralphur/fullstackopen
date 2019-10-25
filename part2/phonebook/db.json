@@ -12,13 +12,8 @@
     },
     {
       "name": "asd",
-      "number": "ffff",
+      "number": "",
       "id": 8
-    },
-    {
-      "name": "yes",
-      "number": "1293945",
-      "id": 9
     },
     {
       "name": "dfghhjj",
@@ -39,6 +34,11 @@
       "name": "asdasd",
       "number": "wwww",
       "id": 13
+    },
+    {
+      "name": "",
+      "number": "",
+      "id": 14
     }
   ]
 }
